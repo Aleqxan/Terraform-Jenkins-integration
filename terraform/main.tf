@@ -1,8 +1,8 @@
-provider  "aws" {
+provider "aws" {
     region = "var.region"
 }
 
-resouce "aws_vpc" "javaapp-vpc"{
+resource "aws_vpc" "javaapp-vpc"{
     cldr_block = var.vpc_cidr_block
     tags = {
         Name = "${var.env_prefix}-vpc"
@@ -43,7 +43,7 @@ resource "aws_default_security_group" "default_sg" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = [var.my_ip]
+    cidr_blocks      = [var.my_ip, var.jenkins_ip]
   }
 
   ingress {
