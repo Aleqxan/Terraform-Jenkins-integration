@@ -1,5 +1,14 @@
+terraform {
+    required_version = ">= 0.12"
+    backend "s3" {
+        bucket = "javaapp-bucket"
+        key = "javaapp/state.tfstate"
+        region = "af-south-1"
+    }
+}
+
 provider "aws" {
-    region = "var.region"
+    region = var.region
 }
 
 resource "aws_vpc" "javaapp-vpc"{
@@ -23,7 +32,7 @@ resource "aws_internet_gateway" "main-rtb" {
   tags = {
     Name = "${var.env_prefix}-igw"
   }
-
+}
 resource "aws_default_route_table" "prod-route-table" {
   default_route_table_id = aws_vpc.javaapp-vpc.default_route_table_id
 
